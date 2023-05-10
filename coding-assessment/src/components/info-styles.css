@@ -7,11 +7,64 @@
   display: flex;
   flex-direction: column;
   border: 1px solid;
-  border-radius: 25px;
+  border-radius: 15px;
   margin: 10px;
   padding: 10px;
 }
-
+.img-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 img {
-  width: 25%;
+  display: flex;
+  width: 90%;
+}
+.filter-component {
+  display: flex;
+  justify-content: center;
+}
+.filters {
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+}
+
+
+/* this can be cleaned up and made dynamic */
+.scent-woodsy {
+  color: white;
+  background-color: #165834;
+  padding: 5px;
+  border-radius: 10px;
+}
+.scent-citrus {
+  color: white;
+  background-color: #de7c00;
+  padding: 5px;
+  border-radius: 10px;
+}
+.scent-fresh {
+  color: white;
+  background-color: #006fd6;
+  padding: 5px;
+  border-radius: 10px;
+}
+.scent-herbal {
+  color: white;
+  background-color: #5a3714;
+  padding: 5px;
+  border-radius: 10px;
+}
+.scent-rich {
+  color: white;
+  background-color: #e0a17e;
+  padding: 5px;
+  border-radius: 10px;
+}
+.scent-spiced {
+  color: white;
+  background-color: #c10000;
+  padding: 5px;
+  border-radius: 10px;
 }

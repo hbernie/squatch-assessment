@@ -21,7 +21,8 @@ const Info = ({ bundle }) => {
         let includedProducts = products.map((data) => data.title);
         let profiles = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
         profiles = [...new Set(profiles)] //get rid of duplicates
-        includedProducts = [...new Set(includedProducts)]
+        
+        //TODO: display the duplicates in the included products ex: Birchwood Breeze Deodorant X 3
 
         setIncludedProduct(includedProducts);
         setScentProfile(profiles);
@@ -36,20 +37,21 @@ const Info = ({ bundle }) => {
 
     return (
       <div className="card-info">
-        <img src={bundle.imageSrc} />
+        <div className='img-container'>
+          <img src={bundle.imageSrc} />
+        </div>
+        
         <h2>{bundle.title}</h2>
         <h3>Included</h3>
-        <ul>
+        <div>
           {includedProduct.map((prod, idx) => (
-            <li key={idx}>{prod}</li>
+            <p key={idx}>{prod}</p>
           ))}
-        </ul>
+        </div>
         <h3>${bundle.price/100}</h3>
-        <ol>
           {scentProfile.map((scent, idx) => (
-            <li key={idx}>{scent}</li>
+            <p key={idx} className={`scent-${scent}`}>{scent.toUpperCase()}</p>
           ))}
-        </ol>
       </div>
     );
   };
