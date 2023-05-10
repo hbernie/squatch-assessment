@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Info from './components/Info';
 import './App.css'
+import Filter from './components/Filter';
 
 function App() {
   const [info, setInfo] = useState([]);
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div>
+      <Filter />
       {info.map((bundle, id) => (
         <Info bundle={bundle} key={id}/>
       ))}

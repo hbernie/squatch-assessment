@@ -19,8 +19,8 @@ const Info = ({ bundle }) => {
 
         //set the states
         const includedProducts = products.map((data) => data.title);
-        const profiles = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); 
-
+        let profiles = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
+        profiles = [...new Set(profiles)] //get rid of duplicates
 
         setIncludedProduct(includedProducts);
         setScentProfile(profiles);
