@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Info from './components/Info';
 import './App.css'
 import Filter from './components/Filter';
+import './components/info-styles.css'
 
 function App() {
   const [info, setInfo] = useState([]);
@@ -19,9 +20,11 @@ function App() {
   return (
     <div>
       <Filter />
-      {info.map((bundle, id) => (
-        <Info bundle={bundle} key={id}/>
-      ))}
+      <div className='bundle-component'>
+        {info.map((bundle, id) => (
+          <Info bundle={bundle} key={id}/>
+        ))}
+      </div>
     </div>
   )
 }
