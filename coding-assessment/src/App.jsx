@@ -16,7 +16,9 @@ function App() {
 
   return (
     <div>
-      <Info info={info}/>
+      {info.map((bundle, id) => (
+        <Info bundle={bundle} key={id}/>
+      ))}
     </div>
   )
 }
