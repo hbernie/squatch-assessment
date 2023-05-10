@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   const [info, setInfo] = useState([]);
 
+  //fetch data and send over to Info component bundle by bundle
   useEffect(() => {
     fetch('https://ae3t7l1i79.execute-api.us-east-1.amazonaws.com/bundles')
       .then(res => res.json())

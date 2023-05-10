@@ -1,14 +1,9 @@
 .info-container {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .card-info {
-  width: 200px;
-  height: 200px;
-  margin: 10px;
-  padding: 10px;
-  border: 4px solid;
+  display: flex;
 }
 
 img {
