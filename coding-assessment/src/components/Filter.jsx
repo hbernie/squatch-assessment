@@ -56,7 +56,6 @@ const Filter = ({ info }) => {
     } else {
       setFiltered((prevData) => prevData.filter((val) => val !== filterVal));
     }
-    setScents([]);
   };
 
 
@@ -76,7 +75,7 @@ const Filter = ({ info }) => {
           ))}
       </div>
       <div className='bundle-component'>
-        {toDisplay && toDisplay.map((bundle, id) => (
+        {toDisplay.map((bundle, id) => (
           <Info bundle={bundle} key={id}/>
         ))}
       </div>
