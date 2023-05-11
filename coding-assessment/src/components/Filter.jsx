@@ -37,9 +37,12 @@ const Filter = ({ info }) => {
     let display = []
     for (const bundle of info){
       for (const product of scents){
-        if (filtered.includes(product)) display.push(bundle)
+        if (filtered.includes(product)){
+          display.push(bundle)
+        }
       }
     }
+    display = [...new Set(display)];
     setToDisplay(display);
   }, [filtered, info, scents])
 
