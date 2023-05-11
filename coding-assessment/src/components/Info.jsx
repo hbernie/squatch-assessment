@@ -7,32 +7,31 @@ const Info = ({ bundle }) => {
 
   //with each bundle, find the included product titles and scent profiles
   useEffect(() => {
-    //can't do this without async/await
     const fetchProducts = async () => {
       try {
         const productPromises = bundle.products_included.map((el) =>
           fetch(`https://ae3t7l1i79.execute-api.us-east-1.amazonaws.com/product/${el}`)
             .then((res) => res.json())
         );
+
         //all the returned data
         const products = await Promise.all(productPromises);
 
         //set the states
-        let includedProducts = products.map((data) => data.title);
-        let profiles = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
-        profiles = [...new Set(profiles)] //get rid of duplicates
+        let productTitle = products.map((data) => data.title);
+        let productScents = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
+        productScents = [...new Set(productScents)] //get rid of duplicates
         
         //TODO: display the duplicates in the included products ex: Birchwood Breeze Deodorant X 3
 
-        setIncludedProduct(includedProducts);
-        setScentProfile(profiles);
+        setIncludedProduct(productTitle);
+        setScentProfile(productScents);
       } catch (error) {
         console.log(error);
       }
     };
-  
     fetchProducts();
-  }, [bundle.products_included]);
+  }, [bundle.products_included]); //because passed in from App
 
 
     return (
