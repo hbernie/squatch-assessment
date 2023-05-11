@@ -13,17 +13,12 @@ const Info = ({ bundle }) => {
           fetch(`https://ae3t7l1i79.execute-api.us-east-1.amazonaws.com/product/${el}`)
             .then((res) => res.json())
         );
-
         //all the returned data
         const products = await Promise.all(productPromises);
 
         //set the states
         let productTitle = products.map((data) => data.title);
-        let productScents = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
-        productScents = [...new Set(productScents)] //get rid of duplicates
-        
-        //TODO: display the duplicates in the included products ex: Birchwood Breeze Deodorant X 3
-
+        let productScents = products.map((data) => data.scent_profile).flat();
         setIncludedProduct(productTitle);
         setScentProfile(productScents);
       } catch (error) {
@@ -31,7 +26,7 @@ const Info = ({ bundle }) => {
       }
     };
     fetchProducts();
-  }, [bundle.products_included]); //because passed in from App
+  }, [bundle]);
 
 
     return (
@@ -41,8 +36,8 @@ const Info = ({ bundle }) => {
         </div>
         
         <h2>{bundle.title}</h2>
-        <h3>Included</h3>
         <div>
+        <h3>Included</h3>
           {includedProduct.map((prod, idx) => (
             <p key={idx}>{prod}</p>
           ))}

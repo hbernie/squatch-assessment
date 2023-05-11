@@ -7,31 +7,29 @@ const Filter = ({ info }) => {
   const [filtered, setFiltered] = useState(filterNames);
   const [toDisplay, setToDisplay] = useState(info);
 
-  //get the scents and titles of all the bundles
+  //filter each of the bundles scents and bundles to be displayed
   useEffect(() => {
     const fetchScents = async () => {
       let allScents = [];
       let display = [];
 
       for (const bundle_info of info) {
-        for (const included of bundle_info.products_included) {
-          try { //for all products included in a single bundle
+        for (const included of bundle_info.products_included) { //for all products included in a single bundle
+          try { 
             let response = await fetch(`https://ae3t7l1i79.execute-api.us-east-1.amazonaws.com/product/${included}`);
             const data = await response.json();
-            allScents.push(...data.scent_profile);
+            allScents.push(...data.scent_profile); //all the scents for each bundle
 
           } catch (error) {
             console.log(error);
           }
         }
-        //between every bundle
-        //if it matches filtered, add it to display
-        //empty scents state and 
+        //between every bundle, filter bundles to be displayed based on checked scents
         const bundleScents = [...new Set(allScents)];
         if (filtered.some((scent) => bundleScents.includes(scent))) {
           display.push(bundle_info);
         }
-        console.log(display)
+        //empty for the next bundle's scents
         allScents = [];
       }
       setToDisplay(display); // Update the display state
@@ -43,7 +41,7 @@ const Filter = ({ info }) => {
 
 
   //only pass in bundles that match the checked boxes
-  const checked = (event) => {
+  const handleChecked = (event) => {
     const filterVal = event.target.value;
     if (event.target.checked) {
       setFiltered((prevData) => [...prevData, filterVal]);
@@ -60,8 +58,8 @@ const Filter = ({ info }) => {
             <div key={idx}>
             <input 
               type="checkbox"
-              onChange={checked}
-              checked={filtered.includes(filterName)}
+              onChange={handleChecked}
+              checked={filtered.includes(filterName)} //all checked boxes on mount
               id={idx}
               value={filterName}/>
               <label>{filterName}</label>
@@ -70,7 +68,7 @@ const Filter = ({ info }) => {
       </div>
       <div className='bundle-component'>
         {toDisplay.map((bundle, id) => (
-          <Info bundle={bundle} key={id}/>
+          <Info bundle={bundle} key={id}/> //pass all display bundle info to Info component
         ))}
       </div>
     </div>
