@@ -19,8 +19,10 @@ const Info = ({ bundle }) => {
         //set the states
         let productTitle = products.map((data) => data.title);
         let productScents = products.map((data) => data.scent_profile).flat();
+        productScents = [...new Set(productScents)] //get rid of duplicates
         setIncludedProduct(productTitle);
         setScentProfile(productScents);
+
       } catch (error) {
         console.log(error);
       }
