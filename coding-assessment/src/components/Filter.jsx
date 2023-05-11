@@ -4,47 +4,41 @@ import Info from './Info';
 
 const Filter = ({ info }) => {
   const filterNames = ['woodsy', 'fresh', 'citrus', 'herbal', 'rich', 'spiced'];
-  const [scents, setScents] = useState([]);
   const [filtered, setFiltered] = useState(filterNames);
-  const [toDisplay, setToDisplay] = useState([]);
+  const [toDisplay, setToDisplay] = useState(info);
 
   //get the scents and titles of all the bundles
-
   useEffect(() => {
     const fetchScents = async () => {
-      const allScents = [];
-  
+      let allScents = [];
+      let display = [];
+
       for (const bundle_info of info) {
         for (const included of bundle_info.products_included) {
-          try {
+          try { //for all products included in a single bundle
             let response = await fetch(`https://ae3t7l1i79.execute-api.us-east-1.amazonaws.com/product/${included}`);
             const data = await response.json();
             allScents.push(...data.scent_profile);
+
           } catch (error) {
             console.log(error);
           }
         }
+        //between every bundle
+        //if it matches filtered, add it to display
+        //empty scents state and 
+        const bundleScents = [...new Set(allScents)];
+        if (filtered.some((scent) => bundleScents.includes(scent))) {
+          display.push(bundle_info);
+        }
+        console.log(display)
+        allScents = [];
       }
-  
-      let uniqueScents = [...new Set(allScents)]; // Get rid of duplicates
-      setScents(uniqueScents);
+      setToDisplay(display); // Update the display state
     };
   
     fetchScents();
   }, [info, filtered]);
-
-  useEffect(() => {
-    let display = []
-    for (const bundle of info){
-      for (const product of scents){
-        if (filtered.includes(product)){
-          display.push(bundle)
-        }
-      }
-    }
-    display = [...new Set(display)];
-    setToDisplay(display);
-  }, [filtered, info, scents])
 
 
 
