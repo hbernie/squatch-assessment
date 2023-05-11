@@ -62,7 +62,7 @@ const Filter = ({ info }) => {
               checked={filtered.includes(filterName)} //all checked boxes on mount
               id={idx}
               value={filterName}/>
-              <label>{filterName}</label>
+              <label>{filterName.charAt(0).toUpperCase() + filterName.slice(1)}</label>
             </div>
           ))}
       </div>

@@ -32,6 +32,9 @@ img {
   justify-content: space-around;
   width: 40%;
 }
+.price {
+  color: rgb(0, 230, 0);
+}
 
 
 /* this can be cleaned up and made dynamic */

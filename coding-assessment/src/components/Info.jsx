@@ -19,9 +19,25 @@ const Info = ({ bundle }) => {
         //set the states
         let productTitle = products.map((data) => data.title);
         let productScents = products.map((data) => data.scent_profile).flat();
+
+        const duplicateProducts = {};
+        for (const prod of productTitle){
+          if (duplicateProducts[prod] !== undefined) duplicateProducts[prod]++;
+          else duplicateProducts[prod] = 1;
+        }
+
+        setIncludedProduct(() => {
+          const products = [];
+          for (let key in duplicateProducts){
+            if (duplicateProducts[key] === 1) products.push(key)
+            else products.push(key + ' X ' + duplicateProducts[key])
+          }
+          return products;
+        })
+
         productScents = [...new Set(productScents)] //get rid of duplicates
-        setIncludedProduct(productTitle);
         setScentProfile(productScents);
+        // setIncludedProduct(productTitle);
 
       } catch (error) {
         console.log(error);
@@ -36,15 +52,16 @@ const Info = ({ bundle }) => {
         <div className='img-container'>
           <img src={bundle.imageSrc} />
         </div>
-        
         <h2>{bundle.title}</h2>
         <div>
         <h3>Included</h3>
           {includedProduct.map((prod, idx) => (
-            <p key={idx}>{prod}</p>
+            <p key={idx}>{
+              prod
+            }</p>
           ))}
         </div>
-        <h3>${bundle.price/100}</h3>
+        <h3 className='price'>${bundle.price/100}</h3>
           {scentProfile.map((scent, idx) => (
             <p key={idx} className={`scent-${scent}`}>{scent.toUpperCase()}</p>
           ))}
