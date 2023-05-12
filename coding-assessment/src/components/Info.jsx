@@ -56,9 +56,7 @@ const Info = ({ bundle }) => {
         <div>
         <h3>Included</h3>
           {includedProduct.map((prod, idx) => (
-            <p key={idx}>{
-              prod
-            }</p>
+            <p key={idx}>{prod}</p>
           ))}
         </div>
         <h3 className='price'>${bundle.price/100}</h3>
