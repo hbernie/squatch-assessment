@@ -7,7 +7,6 @@ const Info = ({ bundle }) => {
 
   //with each bundle, find the included product titles and scent profiles
   useEffect(() => {
-    //can't do this without async/await
     const fetchProducts = async () => {
       try {
         const productPromises = bundle.products_included.map((el) =>
@@ -18,21 +17,34 @@ const Info = ({ bundle }) => {
         const products = await Promise.all(productPromises);
 
         //set the states
-        let includedProducts = products.map((data) => data.title);
-        let profiles = products.map((data) => data.scent_profile).reduce((acc, curr) => acc.concat(curr), []); //always adding to array
-        profiles = [...new Set(profiles)] //get rid of duplicates
-        
-        //TODO: display the duplicates in the included products ex: Birchwood Breeze Deodorant X 3
+        let productTitle = products.map((data) => data.title);
+        let productScents = products.map((data) => data.scent_profile).flat();
 
-        setIncludedProduct(includedProducts);
-        setScentProfile(profiles);
+        const duplicateProducts = {};
+        for (const prod of productTitle){
+          if (duplicateProducts[prod] !== undefined) duplicateProducts[prod]++;
+          else duplicateProducts[prod] = 1;
+        }
+
+        setIncludedProduct(() => {
+          const products = [];
+          for (let key in duplicateProducts){
+            if (duplicateProducts[key] === 1) products.push(key)
+            else products.push(key + ' X ' + duplicateProducts[key])
+          }
+          return products;
+        })
+
+        productScents = [...new Set(productScents)] //get rid of duplicates
+        setScentProfile(productScents);
+        // setIncludedProduct(productTitle);
+
       } catch (error) {
         console.log(error);
       }
     };
-  
     fetchProducts();
-  }, [bundle.products_included]);
+  }, [bundle]);
 
 
     return (
@@ -40,15 +52,16 @@ const Info = ({ bundle }) => {
         <div className='img-container'>
           <img src={bundle.imageSrc} />
         </div>
-        
         <h2>{bundle.title}</h2>
-        <h3>Included</h3>
         <div>
+        <h3>Included</h3>
           {includedProduct.map((prod, idx) => (
-            <p key={idx}>{prod}</p>
+            <p key={idx}>{
+              prod
+            }</p>
           ))}
         </div>
-        <h3>${bundle.price/100}</h3>
+        <h3 className='price'>${bundle.price/100}</h3>
           {scentProfile.map((scent, idx) => (
             <p key={idx} className={`scent-${scent}`}>{scent.toUpperCase()}</p>
           ))}
