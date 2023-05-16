@@ -1,6 +1,6 @@
 # squatch-assessment
 
-Completed project with filter functionality working on branch "main". Incomplete submitted version of the project on branch "submitted".
+Dr. Squatch coding assessment for software engineering position. To run:
 - cd coding-assessment
 - npm install
 - npm run dev
